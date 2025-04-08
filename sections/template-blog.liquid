@@ -8,13 +8,14 @@
     <p class="text-[12.5px] text-slate-600 roboto">Very us move be blessed multiply night</p>
   </div>
 
-  {% paginate blog.articles by section.settings.number_of_blog_posts %}
+  
 
 
-    <div class="w-full bg-red-300 p-[5em] mb-[3em] mx-auto flex justify-between">
-      <div class="w-[67%] p-[0.5em]  bg-amber-400 ">
+    <div class="w-full  p-[5em] mb-[3em] mx-auto flex justify-between">
+      {% paginate blog.articles by section.settings.number_of_blog_posts %}
+      <div class="w-[67%]    ">
         {% for article in blog.articles reversed %}
-          <div class="w-full bg-blue-400 py-6 px-3">
+          <div class="w-full  py-6 px-3">
             <div class="bg-white shadow-xl rounded-lg overflow-hidden relative">
               {% if article.image %}
                 <a href="{{ article.url }}">
@@ -29,7 +30,7 @@
                 {{ 'image' | placeholder_svg_tag: 'w-full h-80 object-cover bg-gray-100' }}
               {% endif %}
 
-              <div class=" px-[0.4em]  py-[0.4em] text-center leading-[1.2em] w-[3em] absolute bottom-[6.5em] text-[30px] left-[2em] rounded-sm text-white bg-green-400">
+              <div class=" px-[0.4em]  py-[0.4em] text-center leading-[1.2em] w-[3em] absolute bottom-[6.5em] text-[30px] left-[2em] rounded-sm text-white bg-[#71CD14]">
                 <p class="font-semibold">{{ article.created_at | date: "%d %b" }}</p>
               </div>
 
@@ -61,7 +62,9 @@
         </div>
       </div>
 
-      <div class="w-[30%] p-[1em] bg-blue-400 flex flex-col gap-[1.7em]">
+      {% endpaginate %}
+
+      <div class="w-[30%] px-[1em] py-[1.5em] flex flex-col gap-[1.7em]">
 
         {% comment %} SEARCH DIV {% endcomment %}
         <div class="w-full p-[1.5em] bg-[#FBF9FF]  ">
@@ -70,7 +73,7 @@
             action="/search"
             method="get">
             <input
-              class="w-full py-[0.7em] px-[1em] outline-none border-[0.7px] border-green-400 text-slate-400 placeholder:text-slate-400"
+              class="w-full py-[0.7em] px-[1em] outline-none border-[0.7px] border-[#71CD14] text-slate-400 placeholder:text-slate-400"
               type="search"
               name="q"
               placeholder="Search blog posts...">
@@ -78,7 +81,7 @@
               type="hidden"
               name="type"
               value="article">
-            <button class="w-full py-[0.7em] flex justify-center items-center bg-green-400 text-white roboto hover:bg-transparent border border-green-400 hover:text-green-400 duration-300 cursor-pointer" type="submit">Search</button>
+            <button class="w-full py-[0.7em] flex justify-center items-center bg-[#71CD14] text-white roboto hover:bg-transparent border border-[#71CD14] hover:text-[#71CD14] duration-300 cursor-pointer" type="submit">Search</button>
           </form>
 
         </div>
@@ -123,7 +126,7 @@
                     <img src="{{ latest.image |  img_url: 'medium' }}"  class="w-full h-full object-cover object-center group-hover:scale-[1.1] duration-500" alt="{{ latest.image.alt }}" width="" height="">
                   </div>
                   <div class="w-[70%] py-[0.5em] ">
-                    <p class="text-[16px] text-black group-hover:text-green-400 duration-300">{{ latest.title |  truncate: 25 }}</p>
+                    <p class="text-[16px] text-black group-hover:text-[#71CD14] duration-300">{{ latest.title |  truncate: 25 }}</p>
 
                     {% comment %}  VARIABLES ASSIGN {% endcomment %}
                   
@@ -162,11 +165,52 @@
 
 
         </div>
+
+
+        {% comment %} INSTAGRAM FEEDS {% endcomment %}
+        <div class="w-full bg-[#FBF9FF] py-[1.5em] px-[1em]  ">
+          <p class="roboto text-[20px] mb-[1.5em] py-[0.6em] border-b border-[#F0E9FF] ">Instagram Feeds</p>
+          <div class="w-full p-1  flex justify-evenly flex-wrap gap-[0.4em]">
+            {% for feed in blog.articles   %}
+               
+              <div class="w-[30%] h-[5em]  bg-red-300">
+                <img src="{{ feed.image |  img_url: 'medium' }}" alt="{{ feed.image.alt }}" width="" height="" class="w-full h-full object-cover object-center">
+              </div>
+              
+            {% endfor %}
+
+
+          </div>
+
+
+        </div>
+
+
+        {% comment %} NEWSLETTER {% endcomment %}
+        <div class="w-full p-[1.5em] bg-[#FBF9FF]  ">
+          <p class="roboto text-[20px] mb-[1.5em] py-[0.6em] border-b border-[#F0E9FF] ">Newsletter</p>
+         
+
+          {% form 'customer', class: 'w-full flex flex-col gap-4' %}
+             <input type="hidden" name="contact[tags]" value="newsletter">
+
+             <input
+              class="w-full py-[0.7em] px-[1em] outline-none border-[0.7px] border-[#71CD14] text-slate-400 placeholder:text-slate-400"
+              type="email"
+              name="contact[email]"
+              placeholder="Enter email">
+
+             <button class="w-full py-[0.7em] flex justify-center items-center bg-[#71CD14] text-white roboto hover:bg-transparent border border-[#71CD14] hover:text-[#71CD14] duration-300 cursor-pointer" type="submit">Subscribe</button>
+          {% endform %}
+        
+
+        </div>
+
       </div>
     </div>
 
 
-  {% endpaginate %}
+  
 </div>
 
 
