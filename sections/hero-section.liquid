@@ -1,0 +1,84 @@
+{% comment %} HERO SECTION  {% endcomment %}
+
+<div class="w-full min-h-[45em] bg-[#2D5A90] relative overflow-hidden">
+  <div class="w-full max-w-[1440px] mx-auto min-h-[45em] bg-[#2D5A90] relative overflow-hidden">
+    <img 
+    src="{{ 'banner-bg.jpg' | asset_url }}" 
+    alt="Hero Image" 
+    class="w-full   h-full object-cover object-center absolute inset-0" width="" height=""
+  >
+
+
+  <div class="absolute w-full   h-full sm:w-[30em]  top-0 left-0 sm:pl-[5em] text-white leading-[3.5em] flex flex-col justify-center items-center sm:items-start text-center sm:text-start ">
+    <p class="roboto text-[14px]">MEN COLLECTION</p>
+    <h1 class="roboto font-bold text-[52px]"> <span class="text-[#71CD14] roboto">Show</span> Your</h1>
+    <h1 class="roboto font-bold text-[52px]"> Personal <span class="text-[#71CD14] roboto">Style</span> </h1>
+    <p class="text-[18px] roboto">Fowl saw dry which a above together place.</p>
+    <a href="{{routes.collections_url}}" 
+   class="max-w-[171.55px] h-[45.33px] flex justify-center items-center px-[1em] sm:px-[1em] text-[12px] roboto bg-[#71CD14] rounded-sm border-[1.5px] border-[#71CD14] text-white transition-all duration-300 hover:bg-transparent hover:text-[#71CD14] hover:no-underline">
+  VIEW COLLECTION
+</a>
+  </div>
+  </div>
+  
+</div>
+
+
+{% comment %} BOXES {% endcomment %}
+<div class="w-full sm:px-[5em] sm:py-[2em] max-w-[1440px] mx-auto mb-[3em] ">
+    <div class="w-full  p-2  flex justify-between items-center flex-wrap gap-[0.5em] ">
+      <div class="w-full sm:w-[48%] lg:w-[22.5%] p-1  border-[0.7px] border-slate-200">
+        <div class="w-full flex justify-center items-center py-[1.5em]">
+          <i class="fa-solid fa-sack-dollar text-[2em]"></i>
+        </div>
+        <div class="w-full flex flex-col justify-center items-center py-[0.8em]">
+          <p class="text-[15px] roboto whitespace-nowrap">MONEY BACK GURANTEE</p>
+          <p class="text-[14px] roboto text-slate-500">Shall open divide a one</p>
+        </div>
+      </div>
+
+
+      <div class="w-full sm:w-[48%] lg:w-[22.5%] p-1  border-[0.7px] border-slate-200">
+        <div class="w-full flex justify-center items-center py-[1.5em]">
+          <i class="fa-solid fa-truck-fast text-[2em]"></i>
+        </div>
+        <div class="w-full flex flex-col justify-center items-center py-[0.8em]">
+          <p class="text-[15px] roboto">FREE DELIVERY</p>
+          <p class="text-[14px] roboto text-slate-500">Shall open divide a one</p>
+        </div>
+      </div>
+
+      <div class="w-full sm:w-[48%] lg:w-[22.5%] p-1  border-[0.7px] border-slate-200">
+        <div class="w-full flex justify-center items-center py-[1.5em]">
+          <i class="fa-solid fa-headset text-[2em]"></i>
+        </div>
+        <div class="w-full flex flex-col justify-center items-center py-[0.8em]">
+          <p class="text-[15px] roboto">FULL SUPPORT</p>
+          <p class="text-[14px] roboto text-slate-500">Shall open divide a one</p>
+        </div>
+      </div>
+      <div class=" w-full sm:w-[48%] lg:w-[22.5%] p-1  border-[0.7px] border-slate-200">
+        <div class="w-full flex justify-center items-center py-[1.5em]">
+          <i class="fa-solid fa-shield-halved text-[2em]"></i>
+        </div>
+        <div class="w-full flex flex-col justify-center items-center py-[0.8em]">
+          <p class="text-[15px] roboto">PAYEMENT SECURITY</p>
+          <p class="text-[14px] roboto text-slate-500">Shall open divide a one</p>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+
+{% schema %}
+{
+    "name": "Hero Section",
+    "presets": [
+        {
+            "name": "hero_section"
+        }
+    ]
+}
+{% endschema %}

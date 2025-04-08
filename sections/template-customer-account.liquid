@@ -1,0 +1,119 @@
+{% liquid
+   assign customer_order = customer.orders | size 
+%}
+
+<div class="w-full  h-[35em] p-[1em] flex justify-center items-center">
+  <div class="w-full h-full rounded-sm max-w-[1440px] mx-auto  p-[0.5em] flex justify-between">
+    {% comment %} ACCOUNT DETAILS {% endcomment %}
+    <div class="w-[25%] robot rounded-sm h-full  p-[1em]">
+      <h1 class="roboto  text-2xl font-bold text-center underline">{{ section.settings.title }}</h1>
+
+      <div class="flex flex-col gap-4 mt-[3em]">
+        <p class="font-bold text-[1em] underline">Name: {{ customer.first_name }} {{ customer.last_name }}
+        </p>
+        <p class="font-bold text-[1em] underline">Email: {{ customer.email }}
+        </p>
+
+        {% if customer.default_address.address1 %}
+
+          <p class="font-bold text-[1em] underline">Address 1: {{ customer.default_address.address1 }}
+          </p>
+        {% endif %}
+
+
+        {% if customer.default_address.city %}
+
+          <p class="font-bold text-[1em] underline">City: {{ customer.default_address.city }}
+          </p>
+        {% endif %}
+
+
+        {% if customer.default_address.province %}
+
+          <p class="font-bold text-[1em] underline">Province: {{ customer.default_address.province }}
+          </p>
+        {% endif %}
+
+
+        {% if customer.default_address.province %}
+
+          <p class="font-bold text-[1em] underline">Country: {{ customer.default_address.country }}
+          </p>
+        {% endif %}
+
+
+        <a class="px-[1em] py-[0.5em] bg-green-400 border border-green-400 hover:bg-transparent hover:text-green-400 text-white rounded-sm flex justify-center items-center duration-300  " href="{{ routes.account_addresses_url }}">View Addresses
+        </a>
+
+      </div>
+
+    </div>
+
+    {% comment %}  ORDER HISTORY {% endcomment %}
+    <div class="w-[calc(100%-26%)] h-full border-[1px] border-slate-400 p-[1em] flex justify-start items-start flex-wrap overflow-y-scroll gap-2 hide rounded-sm overflow-hidden relative">
+      {% comment %} ORDER COUNT {% endcomment %}
+      <p class="px-[1em] py-[0.5em] text-white roboto rounded-sm bg-green-400 absolute right-[1em] top-[1em]">{{ customer.orders_count }} Orders</p>
+      {% comment %} PRODUCT ORDERED {% endcomment %}
+
+      {% if customer_order > 0 %}
+        {% for order in customer.orders %}
+          
+          <div class="w-[15em] h-[20em] shadow-md hover:shadow-lg duration-300">
+            {% comment %} image section {% endcomment %}
+            <div class="w-full h-[70%]  overflow-hidden flex justify-center items-center">
+              {% if order.line_items.first.image %}
+                <img 
+                src="{{order.line_items.first.image |  image_url : "medium"}}" 
+                alt="{{ order.line_items.first.image.alt }}"
+                class="hover:scale-[1.1] w-full h-full duration-300 object-center object-cover"
+                width=""
+                height="">
+
+                {% else %}
+                  
+                {{ 'product-2' | placeholder_svg_tag: "hover:scale-[1.1] duration-300 object-center object-cover" }}
+              {% endif %}
+            </div>
+            {% comment %} order details {% endcomment %}
+            <div class="w-full h-[30%] p-[0.5em] ">
+              <div class="w-full h-[50%] bg-amber-900 flex justify-between items-center">
+                <p>{{ order.name |  link_to: order.customer_url }}</p>
+                <p>{{ order.financial_status_label }}</p>
+              </div>
+              <div class="w-full h-[50%] bg-purple-800 flex justify-between items-center">
+                <p>{{ order.fulfillment_status }}</p>
+                <p>{{ order.total_price |  money }}</p>
+              </div>
+            </div>
+  
+          </div>
+        {% endfor %}
+
+      {% else %}
+        <div class=" w-full h-full p-[1em]  flex flex-col gap-4 justify-center items-center">
+          <h1 class="text-2xl roboto">Don't have any orders</h1>
+          <a class="px-[1em] py-[0.5em] bg-green-400 border border-green-400 hover:bg-transparent hover:text-white rounded-sm duration-300" href="{{ routes.collections_url }}">Continue Shopping</a>
+        </div>
+       
+
+      {% endif %}
+
+
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "User Account",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "default": "MY ACCOUNT",
+        "label": "Title"
+      }
+    ]
+  }
+{% endschema %}

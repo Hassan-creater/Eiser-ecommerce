@@ -1,0 +1,294 @@
+{% liquid
+  if section.settings.menu.links == blank
+    assign main_menu_linklist = linklists[section.settings.menu].links
+  else
+    assign main_menu_linklist = section.settings.menu.links
+  endif
+%}
+
+
+
+
+
+
+
+
+<header class="w-full relative "  x-data="{ mobileMenuOpen: false, searchBarOpen: false }"
+x-cloak>
+    <!-- Top Menu -->
+    <div class="lg:block hidden  bg-gray-100 px-[5em] py-2 border-b border-gray-200">
+      <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+        <div class="text-[12px] roboto text-slate-500 mb-2 md:mb-0">
+          <span class="mr-4 ">PHONE: +01 256 25 235</span>
+          <span>EMAIL: INFO@EISER.COM</span>
+        </div>
+        <div class="flex space-x-6 text-[12px] roboto text-slate-500 w-[30%]  justify-evenly">
+          <a href="#" class="hover:text-green-500 transition-colors">GIFT CARD</a>
+          <a href="#" class="hover:text-green-500 transition-colors">TRACK ORDER</a>
+          <a href="#" class="hover:text-green-500 transition-colors">CONTACT US</a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Main Menu -->
+    <div class="py-4 shadow-sm sm:px-[4.5em]">
+      <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between">
+          <!-- Logo -->
+          <a href="#" class="">
+            <div class="flex items-center">
+              <img src="{{ 'logo.png' |  asset_url }}" alt="" width="" height="">
+            </div>
+          </a>
+          
+          <!-- Mobile Menu Button -->
+          <div class="lg:hidden" x-data="{cross:false , bars:true}">
+            <div x-on:click="cross=true , bars=false" x-show="bars" id="bars" class="">
+              {% render 'icon-menu' %}
+            </div>
+
+            <div x-on:click="bars=true,cross=false" x-show="cross" id="cross" class="">
+              {% render 'icon-close' %}
+            </div>
+               
+          </div>
+          
+          <!-- Desktop Navigation -->
+          <nav class=" hidden lg:flex items-center space-x-8 text-[14px] justify-between  w-[40%] ">
+            {% for link in main_menu_linklist %}
+              {% if link.links != blank %}
+                <!-- Dropdown Parent -->
+                <div
+                  x-data="{open: false}"
+                  @mouseenter="open = true"
+                  @mouseleave="open = false"
+                  class="flex items-center relative ">
+    
+                  <!-- Parent Link -->
+                  <a class="links cursor-pointer" >{{ link.title }}</a>
+    
+                  <!-- Dropdown Icon -->
+                  <button class="pl-1" aria-label="Toggle dropdown">
+                    {% render 'icon-dropdown' %}
+                  </button>
+    
+                  <!-- Dropdown Content -->
+                  <div
+                    x-show="open"
+                    x-transition
+                    class="absolute bg-white left-0 top-[1.7em] min-w-[200px] duration-500 z-10">
+                    <div class="flex flex-col  ">
+                      {% for sub_link in link.links %}
+                        <a class="p-4 border-[1px] border-slate-100 hover:bg-[#71CD14] hover:text-white duration-300 " href="{{sub_link.url}}">
+                          {{ sub_link.title }}
+                        </a>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+    
+              {% else %}
+                <!-- Simple Link -->
+                <a class="links" href="{{link.url}}">{{ link.title }}</a>
+              {% endif %}
+            {% endfor %}
+          </nav>
+          
+          <!-- Icons -->
+          <div class="hidden lg:flex items-center space-x-6 text-[14px] w-[20%]  justify-between">
+            <button
+              x-on:click="searchBarOpen = true"
+              type="button"
+              class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900">
+              {% render 'icon-search' %}
+            </button>
+            <a href="{{ routes.cart_url }}" class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900">
+              {% render 'icon-shopping-bag' %}
+            </a>
+    
+            {% if shop.customer_accounts_enabled %}
+              {% if customer %}
+                    <a class="hidden lg:block" href="{{routes.account_url}}">{% render 'icon-account' %}</a>
+                    <a class="hover:scale-[1.03] duration-300 text-red-500 hidden lg:block" href="{{routes.account_logout_url}}">LogOut</a>
+    
+                    {% else %}
+                      <a  class="hover:text-[#71CD14] duration-300 hover:translate-y-1 hidden lg:block" href="{{routes.account_login_url}}">Login</a>
+                      <a class="hover:text-[#71CD14] duration-300 hover:translate-y-1 hidden lg:block"  href="{{routes.account_register_url}}">Register</a>
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="menus" class="w-full lg:hidden h-[0em] overflow-hidden duration-300  bg-white">
+      <nav class=" ml-[2em] flex flex-col lg:hidden items-start space-x-8 text-[14px] justify-center gap-[1.5em] mt-[2em] ">
+           
+            
+      {% if shop.customer_accounts_enabled %}
+        {% if customer %}
+              <a class="" href="{{routes.account_url}}">{% render 'icon-account' %}</a>
+              <a class="hover:scale-[1.03] duration-300 text-red-500 " href="{{routes.account_logout_url}}">LogOut</a>
+
+              {% else %}
+                <a  class="hover:text-[#71CD14] duration-300 hover:translate-y-1" href="{{routes.account_login_url}}">Login</a>
+                <a class="hover:text-[#71CD14] duration-300 hover:translate-y-1 "  href="{{routes.account_register_url}}">Register</a>
+        {% endif %}
+      {% endif %}
+
+            {% for link in main_menu_linklist %}
+              {% if link.links != blank %}
+                <!-- Dropdown Parent -->
+                <div
+                  x-data="{open: false}"
+                  @click = "open = !open"
+                  class="flex items-center relative">
+    
+                  <!-- Parent Link -->
+                  <a class="links" href="{{link.url}}">{{ link.title }}</a>
+    
+                  <!-- Dropdown Icon -->
+                  <button class="pl-1" aria-label="Toggle dropdown">
+                    {% render 'icon-dropdown' %}
+                  </button>
+    
+                  <!-- Dropdown Content -->
+                  <div
+                    x-show="open"
+                    x-transition
+                    class="absolute bg-white left-0 top-[1.7em] min-w-[200px] duration-500 z-10">
+                    <div class="flex flex-col  ">
+                      {% for sub_link in link.links %}
+                        <a class="p-4 border-[1px] border-slate-100 hover:bg-[#71CD14] hover:text-white duration-300 " href="{{sub_link.url}}">
+                          {{ sub_link.title }}
+                        </a>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+    
+              {% else %}
+                <!-- Simple Link -->
+                <a class="links" href="{{link.url}}">{{ link.title }}</a>
+              {% endif %}
+            {% endfor %}
+            
+
+            <div class="w-[30%] p-2  flex  gap-4 items-center">
+              <div class="p-[0.5em] bg-slate-400 hover:bg-green-400 duration-300">
+                {% render 'icon-search' %}
+              </div>
+              <div class="p-[0.5em] bg-slate-400 hover:bg-green-400 duration-300">
+                {% render 'icon-shopping-bag' %}
+              </div>
+              
+            </div>
+          </nav>
+    </div>
+  </header>
+
+
+
+
+
+
+
+
+<script>
+  class MenuList{
+    constructor(){
+      this.initList();
+      this.navBarScroll();
+    }
+      
+    getBars(){
+        const bars = document.getElementById("bars");
+
+        return bars;
+    }
+
+    getCross(){
+      const cross = document.getElementById("cross");
+
+      return cross;
+    }
+
+
+    getMenus(){
+      const menus = document.getElementById("menus");
+
+      return menus;
+    }
+
+
+    initList(){
+         const Bars = this.getBars();
+         const Cross = this.getCross();
+         const List = this.getMenus();
+         
+         Bars.addEventListener("click",function(){
+          List.style.height = "25em"
+         })
+
+
+
+         Cross.addEventListener("click",function(){
+          List.style.height = "0em"
+         })
+
+
+
+    }
+
+    navBarScroll(){
+      let lastScroll = 0;
+  const navbar = document.querySelector('.navbar');
+  const topBar = document.querySelector('.topBar')
+  const threshold = 200; // Adjust this value as needed
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll <= threshold) {
+      // Handle behavior near top of page
+      if (currentScroll > lastScroll) {
+        // Scrolling down
+        navbar.classList.add('hidden');
+      } else {
+        // Scrolling up
+        navbar.classList.remove('hidden');
+       
+      }
+    } else {
+      // Past threshold - always show navbar
+      navbar.classList.remove('hidden');
+    }
+
+    lastScroll = currentScroll;
+  });
+    }
+
+
+
+
+    
+
+  }
+
+  const Menuw = new MenuList();
+
+</script>
+
+{% schema %}
+  {
+    "name": "Header",
+    "settings": [
+     {
+        "type": "link_list",
+        "id": "menu",
+        "default": "main-menu",
+        "label": "Heading Navigation Menu"
+      }
+    ]
+  }
+{% endschema %}

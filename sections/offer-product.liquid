@@ -1,0 +1,44 @@
+<div class="w-full bg-[#F6F6F6] mt-[4em] mb-[5em]">
+  <div class="w-full max-w-[1440px] mx-auto   h-[35em] relative">
+    <img src="{{ "offer-bg.png" |  asset_url }}" alt="" width="" height="" class="object-center object-cover  w-full h-full">
+
+
+    <div class="absolute  top-0 lg:right-[16em] lg:w-[25em] w-full h-full  flex flex-col justify-center items-center ">
+        <p class="text-[24px] roboto text-[rgb(74,74,74)]">{{ section.settings.type_of_collection }}</p>
+        <h1 class="text-[75px] sm:text-[100px] font-bold roboto text-[rgb(42,42,42)]">{{ section.settings.offer_price }}</h1>
+        <a href="#" class=" px-[1.8em] py-[0.9em] rounded-sm border-[1px] border-[#71CD14] hover:bg-transparent hover:text-[#71CD14] duration-300 text-[12px] text-white bg-[#71CD14]">DISCOVER NOW</a>
+        <p class="text-[14px] text-slate-500 mt-[1em]">Limited Time offer</p>
+    </div>
+  </div>
+ 
+</div>
+
+
+
+
+
+
+
+{% schema %}
+{
+  "name": "Custom Content",
+  "settings": [
+    {
+      "type": "text",
+      "id": "type_of_collection",
+      "default": "ALL MEN'S COLLECTION",
+      "label": "Type of Collection"
+    },
+    {
+      "type": "text",
+      "id": "offer_price",
+      "default":"50% OFF",
+      "label": "Discount on Product"
+    }
+  ],
+  "presets": [{
+    "name": "Custom Content",
+    "category": "Custom"
+  }]
+}
+{% endschema %}

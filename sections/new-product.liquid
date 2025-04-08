@@ -1,0 +1,92 @@
+<div class="w-full max-w-[1440px] mx-auto p-2  flex justify-center items-center flex-col mb-[5em] sm:px-[5em]">
+  <h1 class="text-center text-[24px] font-bold  py-[0.5em] mb-[0.5em] px-[0.5em] border-b-[1px] border-slate-300">{{ section.settings.new_product }}</h1>
+
+  <p class="text-[14px] text-slate-500 mb-[3em]">Bring called seed first of third give itself now ment</p>
+
+
+  <div class="w-full min-h-[40em] lg:h-[40em]   flex flex-col lg:flex-row gap-[1.3em]  ">
+    <div class="w-full h-full bg-[#F6F6F6] relative flex justify-center items-center">
+      {{ 'product-1' | placeholder_svg_tag }}
+
+      <div class="absolute top-[1.5em] lg:top-[4.5em] text-center">
+        <h2 class=" text-[14px] sm:text-[20px] roboto text-[rgb(74,74,74)]">COLLECTION OF 2019</h2>
+        <h1 class="text-[20px] md:text-[32px] font-bold text-[rgb(42,42,42)]">MEN'S SUMMER T-SHIRT</h1>
+      </div>
+
+
+      <div class="absolute bottom-[1em]  md:bottom-[3.5em]  text-center flex flex-col gap-[0.5em] md:gap-4 items-center justify-center">
+        <h2 class="text-[20px] md:text-[30px] roboto text-[rgb(42,42,42)]">$ 120.70</h2>
+        <a href="#" class="text-[12px] text-white md:px-[2.3em] md:py-[1.1em] px-[1em] py-[0.5em] rounded-sm bg-[#71CD14] border-[1px] border-[#71CD14] hover:bg-transparent hover:text-[#71CD14] duration-300  ">ADD TO CART</a>
+      </div>
+
+
+    </div>
+
+    <div class="w-full h-full  flex flex-wrap justify-evenly items-center gap-[0.5em] ">
+    
+      {% for items in (1..4) %}
+        <div class="w-[48%] h-[48%] ">
+        <div class="w-full h-[75%] bg-[#F0F2F1] relative flex justify-center items-center overflow-hidden group">
+
+          {{ 'product-1' | placeholder_svg_tag }}
+
+          <div class="w-[90%] p-[0.3em] bg-[rgba(113,205,20,0.55)] absolute bottom-0 flex justify-evenly items-center translate-y-[5em] group-hover:-translate-y-[0em] duration-500 ">
+            <div class="flex p-[0.6em] justify-center items-center rounded-full bg-white hover:bg-green-500 hover:text-white duration-300">
+              <i class="fa-solid fa-eye text-[1em]"></i>
+            </div>
+            <div class="flex p-[0.6em] justify-center items-center rounded-full bg-white hover:bg-green-500 hover:text-white duration-300">
+              <i class="fa-solid fa-heart "></i>
+            </div>
+            <div class="flex p-[0.6em] justify-center items-center rounded-full bg-white hover:bg-green-500 hover:text-white duration-300">
+              <i class="fa-solid fa-cart-shopping"></i>
+            </div>
+          </div>
+        </div>
+        <div class="w-full h-[25%]  border-[1px]  border-slate-300 p-[1.5em] flex flex-col justify-center gap-[0.5em]">
+        <p class="text-[14px] roboto group-hover:text-green-500 duration-300">HEADING / TITLE</p>
+        <div class="w-full flex gap-[1.3em] items-center  ">
+            <p class="text-[20px] roboto">$25.00</p>
+            <p class="text-[14px] roboto line-through text-slate-400">$35.00</p>
+        </div>
+    </div>
+      </div>
+      {% endfor %}
+
+      
+
+      
+     
+      
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "New Product",
+    "settings": [
+      {
+        "type": "text",
+        "id": "new_product",
+        "default": "NEW PRODUCT",
+        "label": "Title"
+      },
+
+      {
+        "type": "range",
+        "id": "number_of_card",
+        "min": 2,
+        "max": 4,
+        "label": "Number of Cards",
+        "default": 4
+      }
+    ],
+    "presets": [
+      {
+        "name": "new_product"
+      }
+    ]
+
+  }
+{% endschema %}

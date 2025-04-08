@@ -1,0 +1,33 @@
+{
+    "sections": {
+          
+        "hero-section":{
+            "type" : "hero-section"
+        },
+
+        "featured-collection": {
+            "type": "featured-collection",
+            "settings": {
+                "featured_collection": "all"
+            }
+        },
+
+        "offer-product" :{
+            "type" : "offer-product",
+
+        },
+
+        "new-product" :{
+            "type" : "new-product",
+        },
+
+        "inspired-product":{
+            "type" : "inspired-product",
+        },
+
+        "latest-blogs":{
+            "type":"latest-blogs"
+        }
+    },
+    "order": ["hero-section","featured-collection","offer-product","new-product","inspired-product","latest-blogs"]
+}

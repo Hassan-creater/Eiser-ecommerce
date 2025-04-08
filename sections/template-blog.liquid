@@ -1,0 +1,198 @@
+{% liquid
+  assign latest_blogs = blogs['tech'].articles | sort : 'published_at' 
+%}
+
+<div class="">
+  <div class="w-full bg-[#F6F6F6] py-[4em] px-[5em] flex flex-col gap-3">
+    <h1 class=" text-3xl roboto font-medium">{{ section.settings.blog_title }}</h1>
+    <p class="text-[12.5px] text-slate-600 roboto">Very us move be blessed multiply night</p>
+  </div>
+
+  {% paginate blog.articles by section.settings.number_of_blog_posts %}
+
+
+    <div class="w-full bg-red-300 p-[5em] mb-[3em] mx-auto flex justify-between">
+      <div class="w-[67%] p-[0.5em]  bg-amber-400 ">
+        {% for article in blog.articles reversed %}
+          <div class="w-full bg-blue-400 py-6 px-3">
+            <div class="bg-white shadow-xl rounded-lg overflow-hidden relative">
+              {% if article.image %}
+                <a href="{{ article.url }}">
+                  <img
+                    class="w-full h-80 object-cover"
+                    src="{{ article.image | img_url: 'large' }}"
+                    alt="{{ article.image.alt }}"
+                    width=""
+                    height="">
+                </a>
+              {% else %}
+                {{ 'image' | placeholder_svg_tag: 'w-full h-80 object-cover bg-gray-100' }}
+              {% endif %}
+
+              <div class=" px-[0.4em]  py-[0.4em] text-center leading-[1.2em] w-[3em] absolute bottom-[6.5em] text-[30px] left-[2em] rounded-sm text-white bg-green-400">
+                <p class="font-semibold">{{ article.created_at | date: "%d %b" }}</p>
+              </div>
+
+              <div class="px-[2em] py-[1.5em]">
+                <h1 class="text-[24px] roboto font-medium my-4">{{ article.title }}</h1>
+
+                {% if article.excerpt.size > 0 %}
+                  <p>{{ article.content | strip_html | truncatewords: 25 }}</p>
+                {% else %}
+                  <p class="text-[rgb(153,153,153)]">{{ article.content | strip_html | truncatewords: 25 }}</p>
+                {% endif %}
+
+                <a href="{{ article.url }}">
+                  <div class="w-full px-[1em] mt-[1.6em]  flex  gap-[2em] text-[rgb(153,153,153)] cursor-pointer ">
+                    <p>{{ article.author }}</p>
+                    <p class="border-l border-[rgb(153,153,153)]"></p>
+                    <p>
+                      {{ article.comments_count }} comments</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        {% endfor %}
+        <div class="max-w-full mx-auto mt-[2em]">
+          {% render 'pagination'
+            , pagination: paginate %}
+        </div>
+      </div>
+
+      <div class="w-[30%] p-[1em] bg-blue-400 flex flex-col gap-[1.7em]">
+
+        {% comment %} SEARCH DIV {% endcomment %}
+        <div class="w-full p-[1.5em] bg-[#FBF9FF]  ">
+          <form
+            class="w-full flex flex-col gap-4 "
+            action="/search"
+            method="get">
+            <input
+              class="w-full py-[0.7em] px-[1em] outline-none border-[0.7px] border-green-400 text-slate-400 placeholder:text-slate-400"
+              type="search"
+              name="q"
+              placeholder="Search blog posts...">
+            <input
+              type="hidden"
+              name="type"
+              value="article">
+            <button class="w-full py-[0.7em] flex justify-center items-center bg-green-400 text-white roboto hover:bg-transparent border border-green-400 hover:text-green-400 duration-300 cursor-pointer" type="submit">Search</button>
+          </form>
+
+        </div>
+
+
+        <div class="w-full bg-[#FBF9FF] py-[1.5em] px-[1em]  ">
+          <p class="roboto text-[20px]  py-[0.6em] border-b border-[#F0E9FF] ">Categories</p>
+          <div class="w-full p-1  ">
+           
+              {% assign main_blog_handles = "news,tech" | split: "," %}
+
+              {% for handle in main_blog_handles %}
+                {% assign blog = blogs[handle] %}
+
+                {% if blog %}
+                    <div class="w-full px-[0.2em] text-slate-400 py-[0.3em] border-b border-[#F0E9FF]">
+                        <a href="{{ blog.url }}" class="category-link {% if blog.handle == current_blog.handle %}active{% endif %}">
+                            {{ blog.title }}
+                            <span class="count">({{ blog.articles_count }})</span>
+                          </a>
+                    </div>
+                  
+                {% endif %}
+              {% endfor %}
+            
+
+
+          </div>
+
+
+        </div>
+
+
+        {% comment %} RECENT BLOGS {% endcomment %}
+        <div class="w-full bg-[#FBF9FF] py-[1.5em] px-[1em]  ">
+          <p class="roboto text-[20px] mb-[1.5em] py-[0.6em] border-b border-[#F0E9FF] ">Recent Post</p>
+          <div class="w-full p-1  flex justify-between flex-wrap gap-[0.4em]">
+            {% for latest in latest_blogs limit:4 %}
+              <a href="{{ latest.url }}">
+                <div class="w-full py-[0.5em] group  flex gap-3">
+                  <div class="w-[30%]   flex justify-center items-center overflow-hidden">
+                    <img src="{{ latest.image |  img_url: 'medium' }}"  class="w-full h-full object-cover object-center group-hover:scale-[1.1] duration-500" alt="{{ latest.image.alt }}" width="" height="">
+                  </div>
+                  <div class="w-[70%] py-[0.5em] ">
+                    <p class="text-[16px] text-black group-hover:text-green-400 duration-300">{{ latest.title |  truncate: 25 }}</p>
+
+                    {% comment %}  VARIABLES ASSIGN {% endcomment %}
+                  
+                  
+                     
+                   
+                      <p class="text-[14px] text-[rgb(121,121,121)]">{{ latest.published_at |  date : '%B  %e , %Y' }}</p>
+    
+
+                    
+                  </div>
+                 </div>
+              </a>
+             
+            {% endfor %}
+
+             
+
+
+          </div>
+
+
+        </div>
+
+        {% comment %}  BLOGS TAGS {% endcomment %}
+        <div class="w-full bg-[#FBF9FF] py-[1.5em] px-[1em]  ">
+          <p class="roboto text-[20px] mb-[1.5em] py-[0.6em] border-b border-[#F0E9FF] ">Tags</p>
+          <div class="w-full p-1  flex justify-between flex-wrap gap-[0.4em]">
+            {% for tag in blog.all_tags %}
+
+              <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="min-w-[2em] text-[13px]  hover:bg-green-400 hover:text-white duration-300  text-slate-400 px-[1em] py-[0.3em] border-[0.5px] border-[#F0E9FF] bg-white">{{ tag }}</a>
+            {% endfor %}
+
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+
+  {% endpaginate %}
+</div>
+
+
+{% schema %}
+  {
+    "name": "Blog",
+    "settings": [
+      {
+        "type": "text",
+        "id": "blog_title",
+        "default": "Blog",
+        "label": "Blogs"
+      }, {
+        "type": "text",
+        "id": "blog_read_more",
+        "label": "Read more label",
+        "default": "Read more"
+      }, {
+        "type": "range",
+        "id": "number_of_blog_posts",
+        "step": 1,
+        "min": 1,
+        "max": 6,
+        "label": "Blog posts per page",
+        "default": 3
+      }
+    ]
+  }
+{% endschema %}
