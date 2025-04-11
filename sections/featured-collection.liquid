@@ -4,7 +4,10 @@
     <p class="text-[14px] text-slate-500 mb-[4em]">Bring called seed first of third give itself now ment</p>
 
     <div class="w-full p-2  flex justify-between sm:px-[5em] py-[1em] flex-wrap gap-[1em]">
-        {% for product in section.settings.featured_collection.products limit: section.settings.number_of_products_to_show %}
+
+    {% assign product_featured = collections['mens-collection'].products %}
+        
+        {% for product in product_featured reversed limit: section.settings.number_of_products_to_show   %}
             {% render 'product-card', product_product: product %}
         {% else %}
             {% for item in (1..3) %}
@@ -16,6 +19,8 @@
 
 
 
+
+
 {% schema %}
 {
     "name": "Featured Collection",
@@ -23,7 +28,7 @@
         {
             "type": "text",
             "id": "title",
-            "default": "Featured Collection",
+            "default": "FEATURED PRODUCT",
             "label": "Title"
         },
         {
@@ -36,7 +41,7 @@
             "id": "number_of_products_to_show",
             "min": 3,
             "max": 12,
-            "default": 4,
+            "default": 3,
             "label": "Number of products to show"
         }
     ],

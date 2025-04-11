@@ -4,13 +4,17 @@
     <p class="text-[14px] text-slate-500 mb-[2em]">Bring called seed first of third give itself now ment</p>
 
 
-    <div class="w-full p-2 min-h-[45em]   lg:h-[45em] flex flex-wrap  justify-between items-center gap-[1em] lg:gap-0">
-        {% for product in (1..section.settings.number_of_card) %}
+    <div class="w-full p-2 min-h-[45em]   lg:h-[45em] flex flex-wrap  justify-between items-center sm:gap-[1em] md:gap-[2em] lg:gap-0">
+        {% for product in collections.all.products reversed limit: 8 %}
             
             <div class=" w-full sm:w-[48%]  md:w-[24%] md:h-[47%]  ">
-        <div class="w-full h-[75%] bg-[#F0F2F1] relative flex justify-center items-center overflow-hidden group">
+        <div class="w-full h-[16em] bg-[#F0F2F1] relative flex justify-center items-center overflow-hidden group">
+          {% if product.featured_image %}
+             <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.featured_image.alt }}" width="" height="" class="object-center object-cover w-full h-full ">
+             {% else %}
+             {{ 'product-1' | placeholder_svg_tag }}
+          {% endif %}
 
-          {{ 'product-1' | placeholder_svg_tag }}
 
           <div class="w-[90%] p-[0.3em] bg-[rgba(113,205,20,0.55)] absolute bottom-0 flex justify-evenly items-center translate-y-[5em] group-hover:-translate-y-[0em] duration-500 ">
             <div class="flex p-[0.6em] justify-center items-center rounded-full bg-white hover:bg-green-500 hover:text-white duration-300">
@@ -19,16 +23,20 @@
             <div class="flex p-[0.6em] justify-center items-center rounded-full bg-white hover:bg-green-500 hover:text-white duration-300">
               <i class="fa-solid fa-heart "></i>
             </div>
-            <div class="flex p-[0.6em] justify-center items-center rounded-full bg-white hover:bg-green-500 hover:text-white duration-300">
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
+
+
+            <form class="add-to-cart-form" data-product-id="{{ product.selected_or_first_available_variant.id }}" >
+              <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+              <button type="submit" class="add-to-cart-button flex p-[0.6em] justify-center items-center rounded-full bg-white hover:bg-green-500 hover:text-white duration-300 "> <i class="fa-solid fa-cart-shopping"></i></button>
+          </form>
+           
           </div>
         </div>
-        <div class="w-full h-[25%]  border-[1px]  border-slate-300 p-[1.5em] flex flex-col justify-center gap-[0.5em]">
-        <p class="text-[14px] roboto group-hover:text-green-500 duration-300 ">HEADING / TITLE</p>
+        <div class="w-full h-[5.5em]  border-[1px]  border-slate-300 p-[1.5em] flex flex-col justify-center gap-[0.5em]">
+        <p class="text-[14px] roboto group-hover:text-green-500 duration-300 ">{{ product.title |  truncate: 23 }}</p>
         <div class="w-full flex gap-[1.3em] items-center  ">
-            <p class="text-[20px] roboto">$25.00</p>
-            <p class="text-[14px] roboto line-through text-slate-400">$35.00</p>
+            <p class="text-[20px] roboto">{{ product.price |  money }}</p>
+            {% comment %} <p class="text-[14px] roboto line-through text-slate-400">$35.00</p> {% endcomment %}
         </div>
     </div>
       </div>
@@ -45,7 +53,7 @@
 {
     "name": "Inspired Products",
     "settings": [
-           {
+           { 
              "type": "text",
              "label": "Title",
               "id": "title",

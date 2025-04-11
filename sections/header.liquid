@@ -102,9 +102,18 @@ x-cloak>
               class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900">
               {% render 'icon-search' %}
             </button>
-            <a href="{{ routes.cart_url }}" class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900">
-              {% render 'icon-shopping-bag' %}
-            </a>
+             <div class=" relative cart-icon">
+              <a href="{{ routes.cart_url }}" class="whitespace-nowrap  py-[0.5em] text-base text-gray-500 hover:text-gray-900">
+                {% render 'icon-shopping-bag' %}
+              </a>
+           
+                <p id="cart-count" class=" absolute -top-[1em] -right-[0.3em] px-[0.2em] rounded-full bg-green-400  "> {% if cart.item_count > 0 %}
+                     {{ cart.item_count }}
+                {% endif %} </p>
+                
+           
+             </div>
+           
     
             {% if shop.customer_accounts_enabled %}
               {% if customer %}
@@ -198,7 +207,7 @@ x-cloak>
   class MenuList{
     constructor(){
       this.initList();
-      this.navBarScroll();
+      
     }
       
     getBars(){
@@ -240,36 +249,7 @@ x-cloak>
 
     }
 
-    navBarScroll(){
-      let lastScroll = 0;
-  const navbar = document.querySelector('.navbar');
-  const topBar = document.querySelector('.topBar')
-  const threshold = 200; // Adjust this value as needed
-
-  window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-
-    if (currentScroll <= threshold) {
-      // Handle behavior near top of page
-      if (currentScroll > lastScroll) {
-        // Scrolling down
-        navbar.classList.add('hidden');
-      } else {
-        // Scrolling up
-        navbar.classList.remove('hidden');
-       
-      }
-    } else {
-      // Past threshold - always show navbar
-      navbar.classList.remove('hidden');
-    }
-
-    lastScroll = currentScroll;
-  });
-    }
-
-
-
+   
 
     
 
