@@ -12,16 +12,9 @@
     "template": {
       "type": "template-page",
       "settings": {}
-    },
-    "latest_blogs_VRUGL6": {
-      "type": "latest-blogs",
-      "settings": {
-        "title": "LATEST BLOGS"
-      }
     }
   },
   "order": [
-    "template",
-    "latest_blogs_VRUGL6"
+    "template"
   ]
 }
