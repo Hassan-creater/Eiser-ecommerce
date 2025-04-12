@@ -13,16 +13,15 @@
       "type": "template-page",
       "settings": {}
     },
-    "offer_product_kz6nUA": {
-      "type": "offer-product",
+    "latest_blogs_VRUGL6": {
+      "type": "latest-blogs",
       "settings": {
-        "type_of_collection": "ALL MEN'S COLLECTION",
-        "offer_price": "50% OFF"
+        "title": "LATEST BLOGS"
       }
     }
   },
   "order": [
     "template",
-    "offer_product_kz6nUA"
+    "latest_blogs_VRUGL6"
   ]
 }
